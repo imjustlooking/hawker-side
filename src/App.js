@@ -5,7 +5,7 @@ import firebase from './firebase.js'
 class App extends Component {
   constructor () {
     super()
-    this.state = { inputs: ['1'] }
+    this.state = { inputs: [] }
   }
   handleSubmit (e) {
     e.preventDefault()
@@ -27,14 +27,14 @@ class App extends Component {
     for (var i = 0; i < values.length; i++) {
       if (i % 2 === 0) {
         console.log(values[i])
-        restaurant.items[values[i]] = values[i + 1]
+        restaurant.items[i / 2] = {name: values[i], price: values[i + 1]}
       }
     }
     console.log(restaurant)
     restaurantRef.push(restaurant)
   }
   appendInput () {
-    var newInput = `${this.state.inputs.length + 1}`
+    var newInput = this.state.inputs.length + 1
     this.setState({ inputs: this.state.inputs.concat([newInput]) })
   }
   render () {
@@ -54,7 +54,7 @@ class App extends Component {
               {this.state.inputs.map(
                  (counter, index) =>
                    <div key={index}>
-                     <input type='text' name={'it' + counter} placeholder={'Dish ' + counter + ' name'} required />
+                     <input type='text' name={'it' + counter} placeholder={'Dish ' + (counter+1) + ' name'} required />
                      <input type='number' name={'pr' + counter} min='0.01' step='0.01' placeholder='Price: e.g. 10.00' required />
                    </div>)}
               <button type='submit'>Submit</button>
