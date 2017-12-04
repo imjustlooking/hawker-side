@@ -4,7 +4,10 @@ import './App.css'
 import firebase from './firebase.js'
 
 class App extends Component {
-
+  constructor(props) {
+       super(props);
+       this.state = { inputs: ['2'] };
+   }
   handleSubmit(e) {
     e.preventDefault()
     const restaurantRef = firebase.database().ref('restaurants')
@@ -26,6 +29,10 @@ class App extends Component {
     }
     restaurantRef.push(restaurant)
   }
+  appendInput() {
+        var newInput = `${this.state.inputs.length+2}`;
+        this.setState({ inputs: this.state.inputs.concat([newInput]) });
+  }
   render() {
     return (
       <div className='app'>
@@ -38,12 +45,20 @@ class App extends Component {
           <section className='add-item'>
             <form refs='form' onSubmit={e => this.handleSubmit(e)}>
               <input type='text' name='user' placeholder="What's your restaurant name?" required />
-              <input type='text' name='it0' placeholder='Dish name' required />
+              <input type='text' name='it0' placeholder='Dish 1 name' required />
               <input type='number' name='pr0' min='0.01' step='0.01' placeholder='Price: e.g. 10.00' required />
-              <input type='text' name='it1' placeholder='Dish name' required />
-              <input type='number' name='pr1' min='0.01' step='0.01' placeholder='Price: e.g. 10.00' required />
+              <div id="dynamicInput">
+                         {this.state.inputs.map(
+                           counter =>
+                           <div>
+                           <input type='text' name={'it' + counter} placeholder={'Dish ' + counter + ' name'} required />
+                           <input type='number' name={'pr' + counter} min='0.01' step='0.01' placeholder='Price: e.g. 10.00' required /> </div>)}
+              </div>
               <button type='submit'>Submit</button>
             </form>
+            <button onClick={() => this.appendInput() }>
+                   Add dish
+               </button>
           </section>
           <section className='display-item'>
             <div className='wrapper'>
