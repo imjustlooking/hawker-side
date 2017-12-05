@@ -1,79 +1,8 @@
 import React, { Component } from 'react'
-import './App.css'
 import firebase from './firebase.js'
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom'
+import './App.css'
 
-const BasicExample = () => (
-  <Router>
-    <div>
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/about">About</Link></li>
-        <li><Link to="/topics">Topics</Link></li>
-        <li><Link to="/menu">Menu</Link></li>
-      </ul>
-
-      <hr/>
-
-      <Route exact path="/" component={Home}/>
-      <Route path="/about" component={About}/>
-      <Route path="/topics" component={Topics}/>
-      <Route path="/menu" component={App}/>
-    </div>
-  </Router>
-)
-
-const Home = () => (
-  <div>
-    <h2>Home</h2>
-  </div>
-)
-
-const About = () => (
-  <div>
-    <h2>About</h2>
-  </div>
-)
-
-const Topics = ({ match }) => (
-  <div>
-    <h2>Topics</h2>
-    <ul>
-      <li>
-        <Link to={`${match.url}/rendering`}>
-          Rendering with React
-        </Link>
-      </li>
-      <li>
-        <Link to={`${match.url}/components`}>
-          Components
-        </Link>
-      </li>
-      <li>
-        <Link to={`${match.url}/props-v-state`}>
-          Props v. State
-        </Link>
-      </li>
-    </ul>
-
-    <Route path={`${match.url}/:topicId`} component={Topic}/>
-    <Route exact path={match.url} render={() => (
-      <h3>Please select a topic.</h3>
-    )}/>
-  </div>
-)
-
-const Topic = ({ match }) => (
-  <div>
-    <h3>{match.params.topicId}</h3>
-  </div>
-)
-
-class App extends Component {
+class MenuSetup extends Component {
   constructor () {
     super()
     this.state = {
@@ -87,7 +16,7 @@ class App extends Component {
            .filter(el => el.name)
            .reduce((a, b) => ({...a, [b.name]: b.value}),
            {})
-    console.log(formData)
+    // console.log(formData)
     // console.log('number of food fields', Object.keys(formData).length - 1)
 
     let restaurant = {
@@ -119,21 +48,6 @@ class App extends Component {
           </div>
         </header>
         <div className='container'>
-          {/* <Router>
-            <div>
-              <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/about">About</Link></li>
-                <li><Link to="/topics">Topics</Link></li>
-              </ul>
-
-              <hr/>
-
-              <Route exact path="/" component={Home}/>
-              <Route path="/about" component={About}/>
-              <Route path="/topics" component={Topics}/>
-            </div>
-          </Router> */}
           <section className='add-item'>
             <form refs='form' onSubmit={e => this.handleSubmit(e)}>
               <input type='text' name='user' placeholder="What's your restaurant name?" required />
@@ -162,4 +76,4 @@ class App extends Component {
     )
   }
 }
-export default BasicExample
+export default MenuSetup
