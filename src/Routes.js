@@ -1,31 +1,72 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
+  Redirect
 } from 'react-router-dom'
+import { auth, provider } from './firebase.js'
 import MenuSetup from './Menusetup'
 import Orders from './Orders'
 
-const BasicExample = () => (
-  <Router>
-    <div>
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/orders">Orders</Link></li>
-        <li><Link to="/topics">Topics</Link></li>
-        <li><Link to="/menu">Menu</Link></li>
-      </ul>
+class BasicExample extends Component {
+  constructor () {
+    super()
+    this.state = {
+      inputs: [],
+      user: null
+    }
+  }
+  logout () {
+    auth.signOut()
+      .then(() => {
+        this.setState({
+          user: null
+        })
+      })
+  }
+  login () {
+    auth.signInWithPopup(provider)
+      .then((result) => {
+        const user = result.user
+        this.setState({
+          user
+        })
+      })
+  }
+  render () {
+    return (
+      <Router>
+        <div>
+          <ul>
+            <li><Link to='/'>Home</Link></li>
+            <li><Link to='/orders'>Orders</Link></li>
+            <li><Link to='/topics'>Topics</Link></li>
+            <li><Link to='/menu'>Menu</Link></li>
+            {this.state.user
+              ? <button onClick={() => this.logout()}>Log Out</button>
+              : <button onClick={() => this.login()}>Log In</button>
+            }
+          </ul>
 
-      <hr />
-
-      <Route exact path="/" component={Home}/>
-      <Route path="/orders" component={Orders}/>
-      <Route path="/topics" component={Topics}/>
-      <Route path="/menu" component={MenuSetup}/>
-    </div>
-  </Router>
-)
+          <hr />
+          {/* if (!{this.state.user}) return <Redirect to='/' /> */}
+          <Route exact path='/' component={Home} />
+          <Route path='/orders' component={Orders} />
+          <Route path='/topics' component={Topics} />
+          <Route path='/menu' component={MenuSetup} />
+        </div>
+      </Router>
+    )
+  }
+  componentDidMount () {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ user })
+      }
+    })
+  }
+}
 
 const Home = () => (
   <div>
@@ -54,10 +95,10 @@ const Topics = ({ match }) => (
       </li>
     </ul>
 
-    <Route path={`${match.url}/:topicId`} component={Topic}/>
+    <Route path={`${match.url}/:topicId`} component={Topic} />
     <Route exact path={match.url} render={() => (
       <h3>Please select a topic.</h3>
-    )}/>
+    )} />
   </div>
 )
 

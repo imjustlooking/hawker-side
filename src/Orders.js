@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import firebase from './firebase.js'
-
 class Orders extends Component {
   constructor () {
     super()
@@ -10,7 +9,7 @@ class Orders extends Component {
   }
 
   setItemsState () {
-    var hawkerRef = firebase.database().ref('orders').child('H06').orderByChild('order_status').equalTo('unpaid')
+    var hawkerRef = firebase.database().ref('orders').child('H06').orderByChild('order_status').equalTo('preparing')
     // var hawkerRef = firebase.database().ref().child('orders').orderByChild('H_id').equalTo('H02')
     hawkerRef.on('value', snap => {
       console.log('preview', snap.val())
@@ -37,35 +36,28 @@ class Orders extends Component {
 
   changeStatus (e) {
     var orderRef = firebase.database().ref('orders/' + 'H06/' + e.target.id).child('order_status')
-    // orderRef.on('value', snap => {
-    //   console.log('preview', snap.val().order_status)
-    // })
     orderRef.set(
       'ready'
     )
   }
+  checkState () {
+    console.log('state', this.state)
+  }
 
-  // manualAdjust () {
-  //   var orderRef = firebase.database().ref('orders/' + 'H06' + '/2').child('order_status')
-  //   orderRef.on('value', snap => {
-  //     console.log('preview addManual', snap.val())
-  //   })
-  //   orderRef.set(
-  //     'unpaid lol'
-  //   )
-  // }
   render () {
     return (
       <div>
+        {/* <BasicExample user={this.state.user} /> */}
         <h1> Orders </h1>
-        {
-          this.state.order.map(
-              (test, index) =>
-                <p id={index} onDoubleClick={(e) => this.changeStatus(e)}key={index}> {test} </p>
-        )
-        }
-        <button onClick={() => this.manualAdjust()}> addManual </button>
-        <button onClick={() => this.manualAdjust()}> testing haha </button>
+        <button onClick={() => this.checkState()}> Testing </button>
+         {/* {this.state.user
+           ? this.state.order.map(
+               (test, index) =>
+                 <p id={index} onDoubleClick={(e) => this.changeStatus(e)} key={index}> {test} </p>
+         )
+           : <div> <p> You must be logged in to see your store orders. </p> </div>
+         } */}
+
       </div>
     )
   }

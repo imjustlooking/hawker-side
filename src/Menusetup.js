@@ -41,6 +41,7 @@ class MenuSetup extends Component {
     var newInput = this.state.inputs.length + 1
     this.setState({ inputs: this.state.inputs.concat([newInput]) })
   }
+
   render () {
     return (
       <div className='app'>
