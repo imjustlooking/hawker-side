@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import firebase from './firebase.js'
 class Orders extends Component {
-  constructor (someProp) {
+  constructor (props) {
     super()
     this.state = {
       order: [],
-      user: someProp
+      user: props.someProp
     }
   }
 
@@ -51,18 +51,18 @@ class Orders extends Component {
         {/* <BasicExample user={this.state.user} /> */}
         <h1> Orders </h1>
         <p> Double click on the order(s) to complete them. </p>
-        {this.state.order.map(
+        {/* {this.state.order.map(
             (test, index) =>
               <p id={index} onDoubleClick={(e) => this.changeStatus(e)} key={index}> {test} </p>
-      )}
-        {/* <button onClick={() => this.checkState()}> Testing </button> */}
-         {/* {this.state.user
+      )} */}
+        <button onClick={() => this.checkState()}> Testing </button>
+         {this.state.user
            ? this.state.order.map(
                (test, index) =>
                  <p id={index} onDoubleClick={(e) => this.changeStatus(e)} key={index}> {test} </p>
          )
            : <div> <p> You must be logged in to see your store orders. </p> </div>
-         } */}
+         }
 
       </div>
     )

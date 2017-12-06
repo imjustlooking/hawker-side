@@ -14,6 +14,7 @@ class BasicExample extends Component {
     super()
     this.state = {
       inputs: [],
+      redirect: false,
       user: null
     }
   }
@@ -21,7 +22,8 @@ class BasicExample extends Component {
     auth.signOut()
       .then(() => {
         this.setState({
-          user: null
+          user: null,
+          redirect: true
         })
       })
   }
@@ -41,19 +43,19 @@ class BasicExample extends Component {
           <ul>
             <li><Link to='/'>Home</Link></li>
             <li><Link to='/orders'>Orders</Link></li>
-            <li><Link to='/topics'>Topics</Link></li>
+            {/* <li><Link to='/topics'>Topicstest</Link></li> */}
             <li><Link to='/menu'>Menu</Link></li>
             {this.state.user
-              ? <button onClick={() => this.logout()}>Log Out</button>
-              : <button onClick={() => this.login()}>Log In</button>
+              ? <Link to='/' onClick={() => this.logout()}>Log Out</Link>
+              : <Link to='/' onClick={() => this.login()}>Log In</Link>
             }
           </ul>
 
           <hr />
           {/* if (!{this.state.user}) return <Redirect to='/' /> */}
           <Route exact path='/' component={Home} />
-          <Route path='/orders' component={Orders} />
-          {/* <Route path='/orders' render={() => <Orders someProp={this.state.user} />} /> */}
+          {/* <Route path='/orders' component={Orders} /> */}
+          <Route path='/orders' render={() => <Orders someProp={this.state.user} />} />
           <Route path='/topics' component={Topics} />
           <Route path='/menu' component={MenuSetup} />
         </div>
