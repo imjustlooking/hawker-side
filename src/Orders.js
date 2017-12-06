@@ -36,13 +36,10 @@ class Orders extends Component {
   }
 
   changeStatus (e) {
-    // console.log(e.target.id)
-    // var orderRef = firebase.database().ref('orders/' + 'H06' + '/0')
-
     var orderRef = firebase.database().ref('orders/' + 'H06/' + e.target.id).child('order_status')
-    orderRef.on('value', snap => {
-      console.log('preview', snap.val().order_status)
-    })
+    // orderRef.on('value', snap => {
+    //   console.log('preview', snap.val().order_status)
+    // })
     orderRef.set(
       'ready'
     )
@@ -67,7 +64,7 @@ class Orders extends Component {
                 <p id={index} onDoubleClick={(e) => this.changeStatus(e)}key={index}> {test} </p>
         )
         }
-        <button onClick={() => this.manualAdjust()}> addManual </button>
+        {/* <button onClick={() => this.manualAdjust()}> addManual </button> */}
       </div>
     )
   }
