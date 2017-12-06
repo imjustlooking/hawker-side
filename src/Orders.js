@@ -65,6 +65,7 @@ class Orders extends Component {
         )
         }
         <button onClick={() => this.manualAdjust()}> addManual </button>
+        <button onClick={() => this.manualAdjust()}> testing haha </button>
       </div>
     )
   }
