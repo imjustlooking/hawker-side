@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import firebase from './firebase.js'
 class Orders extends Component {
-  constructor () {
+  constructor (someProp) {
     super()
     this.state = {
-      order: []
+      order: [],
+      user: someProp
     }
   }
 
@@ -49,7 +50,12 @@ class Orders extends Component {
       <div>
         {/* <BasicExample user={this.state.user} /> */}
         <h1> Orders </h1>
-        <button onClick={() => this.checkState()}> Testing </button>
+        <p> Double click on the order(s) to complete them. </p>
+        {this.state.order.map(
+            (test, index) =>
+              <p id={index} onDoubleClick={(e) => this.changeStatus(e)} key={index}> {test} </p>
+      )}
+        {/* <button onClick={() => this.checkState()}> Testing </button> */}
          {/* {this.state.user
            ? this.state.order.map(
                (test, index) =>

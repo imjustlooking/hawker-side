@@ -53,6 +53,7 @@ class BasicExample extends Component {
           {/* if (!{this.state.user}) return <Redirect to='/' /> */}
           <Route exact path='/' component={Home} />
           <Route path='/orders' component={Orders} />
+          {/* <Route path='/orders' render={() => <Orders someProp={this.state.user} />} /> */}
           <Route path='/topics' component={Topics} />
           <Route path='/menu' component={MenuSetup} />
         </div>
