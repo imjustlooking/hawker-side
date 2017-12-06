@@ -11,7 +11,6 @@ class MenuSetup extends Component {
   }
   handleSubmit (e) {
     e.preventDefault()
-    const restaurantRef = firebase.database().ref('restaurants')
     const formData = Array.from(e.target.elements)
            .filter(el => el.name)
            .reduce((a, b) => ({...a, [b.name]: b.value}),
@@ -24,7 +23,7 @@ class MenuSetup extends Component {
       name: formData.user
     }
     var values = Object.values(formData)
-    values.splice(0, 1)
+    values.splice(0, 1) // to remove formData.user
 
     for (var i = 0; i < values.length; i++) {
       if (i % 2 === 0) {
@@ -32,8 +31,11 @@ class MenuSetup extends Component {
         restaurant.items[i / 2] = {name: values[i], price: values[i + 1]}
       }
     }
-    console.log(restaurant)
+    console.log('restaurant output', restaurant)
+    const restaurantRef = firebase.database().ref('restaurants')
     restaurantRef.push(restaurant)
+    // const restaurantRef = firebase.database().ref('restaurants').child(formData.user)
+    // restaurantRef.set(restaurant)
   }
   appendInput () {
     var newInput = this.state.inputs.length + 1
