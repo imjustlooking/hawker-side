@@ -21,7 +21,7 @@ class MenuSetup extends Component {
            .filter(el => el.name)
            .reduce((a, b) => ({...a, [b.name]: b.value}),
            {})
-    // console.log(formData)
+    console.log(formData)
     // console.log('number of food fields', Object.keys(formData).length - 1)
 
     let hawker = {
