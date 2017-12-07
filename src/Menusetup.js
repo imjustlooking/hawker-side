@@ -55,34 +55,42 @@ class MenuSetup extends Component {
   }
 
   render () {
+    if (!this.state.user) {
+      return <Redirect to='/' />
+    }
     return (
       <div className='app'>
         <header>
-          <div className='wrapper'>
+          {/* <div className='wrapper'> */}
             <h1>Hawker Menu Setup</h1>
-          </div>
+          {/* </div> */}
         </header>
         <div className='container'>
           {this.state.user
             ? <section className='add-item'>
               <form refs='form' onSubmit={e => this.handleSubmit(e)}>
-                <input type='text' name='hawker_id' value={this.state.id} disabled='disabled' />
-                <input type='text' name='user' placeholder="What's your stall name?" required />
-                <input type='text' name='it0' placeholder='Dish 1 name' required />
-                <input type='number' name='pr0' min='0.01' step='0.01' placeholder='Price: e.g. 10.00' required />
-
+                <div className="form-group row">
+                  <div className="col-12">
+                      <input type='text' className='form-control' name='hawker_id' value={this.state.id} disabled='disabled' />
+                      <input type='text' className='form-control' name='user' placeholder='Stall name' required />
+                      <input type='text' className='form-control' name='it0' placeholder='Dish 1 name' required />
+                      <input type='number' className='form-control' name='pr0' min='0.01' step='0.01' placeholder='Price: e.g. 10.00' required />
+                  </div>
+                </div>
                 {this.state.inputs.map(
                  (counter, index) =>
                    <div key={index}>
-                     <input type='text' name={'it' + counter} placeholder={'Dish ' + (counter + 1) + ' name'} required />
-                     <input type='number' name={'pr' + counter} min='0.01' step='0.01' placeholder='Price: e.g. 10.00' required />
+                     <input type='text' className='form-control' name={'it' + counter} placeholder={'Dish ' + (counter + 1) + ' name'} required />
+                     <input type='number' className='form-control' name={'pr' + counter} min='0.01' step='0.01' placeholder='Price: e.g. 10.00' required />
                    </div>)}
 
                 <button type='submit'>Submit</button>
               </form>
-              <button onClick={() => this.appendInput()}>
+              <div className="buttonwrapper">
+              <button className='button1' onClick={() => this.appendInput()}>
                      Add dish
                  </button>
+               </div>
             </section>
           : <p> You must be logged in to see your adjust your menu items. </p>
         }

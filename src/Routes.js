@@ -87,7 +87,9 @@ class BasicExample extends Component {
 
 const Home = () => (
   <div>
-    <h2>Home</h2>
+    <h1>Home</h1>
+    <p className='orderp'> Welcome to HawkerPay. <br /> This is a free trial account. <br />
+    Your account manager: Gabriel Lu </p>
   </div>
 )
 

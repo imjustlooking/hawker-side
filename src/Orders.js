@@ -63,17 +63,16 @@ class Orders extends Component {
     return (
       <div>
         <h1> Orders </h1>
-        <p> Double click on the order(s) to complete them. </p>
+        <p className='orderp'> Double click on the order(s) to complete them. </p>
         {this.state.user
            ? this.state.order.map(
                (test, index) =>
-               <div className="card" >
-               <div className="card-block">
-                <h4 id={index} onDoubleClick={(e) => this.changeStatus(e)} key={index} className="card-title">Order #{index}</h4>
-                <p className="card-text">{test}</p>
-                {/* <a href="#" class="btn btn-primary">Go somewhere</a> */}
-              </div>
-            </div>
+                 <div className="card" >
+                   <div className="card-block">
+                     <h4 id={index} onDoubleClick={(e) => this.changeStatus(e)} key={index} className="card-title orderp">Order #{index}</h4>
+                     <p className="card-text orderp">{test}</p>
+                   </div>
+                 </div>
          )
         //  {/* <p id={index} onDoubleClick={(e) => this.changeStatus(e)} key={index}> {test} </p> */}
           : <Redirect to='/' />
