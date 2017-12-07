@@ -3,10 +3,12 @@ import firebase from './firebase.js'
 import './App.css'
 
 class MenuSetup extends Component {
-  constructor () {
+  constructor (props) {
     super()
     this.state = {
-      inputs: []
+      inputs: [],
+      user: props.loggedIn,
+      restaurantCount: 0
     }
   }
   handleSubmit (e) {
@@ -51,25 +53,28 @@ class MenuSetup extends Component {
           </div>
         </header>
         <div className='container'>
-          <section className='add-item'>
-            <form refs='form' onSubmit={e => this.handleSubmit(e)}>
-              <input type='text' name='user' placeholder="What's your restaurant name?" required />
-              <input type='text' name='it0' placeholder='Dish 1 name' required />
-              <input type='number' name='pr0' min='0.01' step='0.01' placeholder='Price: e.g. 10.00' required />
-              {
-                this.state.inputs.map(
+          {this.state.user
+            ? <section className='add-item'>
+              <form refs='form' onSubmit={e => this.handleSubmit(e)}>
+                <input type='text' name='user' placeholder="What's your restaurant name?" required />
+                <input type='text' name='it0' placeholder='Dish 1 name' required />
+                <input type='number' name='pr0' min='0.01' step='0.01' placeholder='Price: e.g. 10.00' required />
+
+                {this.state.inputs.map(
                  (counter, index) =>
                    <div key={index}>
                      <input type='text' name={'it' + counter} placeholder={'Dish ' + (counter + 1) + ' name'} required />
                      <input type='number' name={'pr' + counter} min='0.01' step='0.01' placeholder='Price: e.g. 10.00' required />
-                   </div>)
-              }
-              <button type='submit'>Submit</button>
-            </form>
-            <button onClick={() => this.appendInput()}>
-                   Add dish
-               </button>
-          </section>
+                   </div>)}
+
+                <button type='submit'>Submit</button>
+              </form>
+              <button onClick={() => this.appendInput()}>
+                     Add dish
+                 </button>
+            </section>
+          : <p> You must be logged in to see your store orders. </p>
+        }
           <section className='display-item'>
             <div className='wrapper'>
               <ul>

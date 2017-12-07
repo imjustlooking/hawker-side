@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import {
   BrowserRouter as Router,
   Route,
-  Link,
-  Redirect
+  Link
 } from 'react-router-dom'
 import { auth, provider } from './firebase.js'
 import MenuSetup from './Menusetup'
@@ -43,6 +42,8 @@ class BasicExample extends Component {
           <ul>
             <li><Link to='/'>Home</Link></li>
             <li><Link to='/orders'>Orders</Link></li>
+
+            {/* <li><Link to={`${match.url}/orders`}>Orders</Link></li> */}
             {/* <li><Link to='/topics'>Topicstest</Link></li> */}
             <li><Link to='/menu'>Menu</Link></li>
             {this.state.user
@@ -52,12 +53,11 @@ class BasicExample extends Component {
           </ul>
 
           <hr />
-          {/* if (!{this.state.user}) return <Redirect to='/' /> */}
           <Route exact path='/' component={Home} />
-          {/* <Route path='/orders' component={Orders} /> */}
-          <Route path='/orders' render={() => <Orders someProp={this.state.user} />} />
+          {/* <Route path='/orders' render={() => <Orders loggedIn={this.state.user} />} /> */}
+          <Route path='/orders' render={() => <Orders loggedIn={this.state.user} />} />
           <Route path='/topics' component={Topics} />
-          <Route path='/menu' component={MenuSetup} />
+          <Route path='/menu' render={() => <MenuSetup loggedIn={this.state.user} />} />
         </div>
       </Router>
     )

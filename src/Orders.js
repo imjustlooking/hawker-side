@@ -5,7 +5,7 @@ class Orders extends Component {
     super()
     this.state = {
       order: [],
-      user: props.someProp
+      user: props.loggedIn
     }
   }
 
@@ -14,17 +14,17 @@ class Orders extends Component {
     // var hawkerRef = firebase.database().ref().child('orders').orderByChild('H_id').equalTo('H02')
     hawkerRef.on('value', snap => {
       console.log('preview', snap.val())
-      // var removeEmptyEl = snap.val().filter(el => el)
+      var removeEmptyEl = snap.val().filter(el => el)
       var orderChange = []
 
-      for (var j in snap.val()) {
-        // console.log('j overview', j, snap.val()[j])
-        // console.log('items', snap.val()[j].items)
+      for (var j in removeEmptyEl) {
+        // console.log('j overview', j, removeEmptyEl[j])
+        // console.log('items', removeEmptyEl[j].items)
         orderChange[j] = [] // each order will occupy a separate array
-        for (var k in snap.val()[j].items) {
-          // console.log(snap.val()[j].items[k].name, snap.val()[j].items[k].quantity)
-          orderChange[j].push(snap.val()[j].items[k].name)
-          orderChange[j].push(' x' + snap.val()[j].items[k].quantity + ' ')
+        for (var k in removeEmptyEl[j].items) {
+          // console.log(removeEmptyEl[j].items[k].name, removeEmptyEl[j].items[k].quantity)
+          orderChange[j].push(removeEmptyEl[j].items[k].name)
+          orderChange[j].push(' x' + removeEmptyEl[j].items[k].quantity + ' ')
         }
       }
 
