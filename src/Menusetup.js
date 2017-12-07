@@ -12,7 +12,7 @@ class MenuSetup extends Component {
       inputs: [],
       user: props.loggedIn,
       hawkerCount: 'H01',
-      id: null
+      id: 'H0'
     }
   }
   handleSubmit (e) {
@@ -21,8 +21,6 @@ class MenuSetup extends Component {
            .filter(el => el.name)
            .reduce((a, b) => ({...a, [b.name]: b.value}),
            {})
-    console.log(formData)
-    // console.log('number of food fields', Object.keys(formData).length - 1)
 
     let hawker = {
       items: {},
@@ -30,21 +28,12 @@ class MenuSetup extends Component {
     }
     var values = Object.values(formData)
     values.splice(0, 2) // to remove formData.user
-    console.log('values', values)
     for (var i = 0; i < values.length; i++) {
       if (i % 2 === 0) {
-        console.log(values[i])
         hawker.items[i / 2] = {name: values[i], price: values[i + 1]}
       }
     }
-    console.log('hawker output', hawker)
     const hawkerRef = firebase.database().ref('hawkers').child(formData.hawker_id)
-    // hawkerRef.on('value', snap =>
-    // this.setState({
-    //   hawkerCount: snap.numChildren()
-    // }))
-    // const hawkerRef = firebase.database().ref('hawkers')
-    // hawkerRef.push(hawker)
     hawkerRef.set(hawker)
   }
   appendInput () {
@@ -97,12 +86,6 @@ class MenuSetup extends Component {
             </section>
           : <p> You must be logged in to see your adjust your menu items. </p>
         }
-          <section className='display-item'>
-            <div className='wrapper'>
-              <ul>
-              </ul>
-            </div>
-          </section>
         </div>
       </div>
     )

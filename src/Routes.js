@@ -63,22 +63,15 @@ class BasicExample extends Component {
             <li><Link to='/'>Home</Link></li>
             <li><Link to='/orders'>Orders</Link></li>
             <li><Link to='/menu'>Menu</Link></li>
-            {/* <li><Link to='/'>Home</Link></li> */}
-            {/* <li><Link to={`${match.url}/orders`}>Orders</Link></li> */}
-            {/* <li><Link to='/menu'>Menu</Link></li> */}
             {this.state.user
-              ? <Link className="btn btn-warning btn-block" to='/' onClick={() => this.logout()}>Log Out</Link>
-              : <Link className="btn btn-outline-warning btn-block" to='/' onClick={() => this.login()}>Log In</Link>
+              ? <Link className='btn btn-outline-warning btn-block' to='/' onClick={() => this.logout()}>Log Out</Link>
+              : <Link className='btn btn-warning btn-block' to='/' onClick={() => this.login()}>Log In</Link>
             }
           </ul>
           <hr />
-          {/* <Route exact path='/' component={Home} />
-          <Route path='/orders' render={() => <Orders loggedIn={this.state.user} />} />
-          <Route path='/menu' render={() => <MenuSetup loggedIn={this.state.user} />} /> */}
           <Route exact path='/' component={Home} />
-          {/* <Route path={`${match.url}/orders`} render={() => <Orders loggedIn={this.state.user} />} /> */}
+          <Route path='/orders' render={() => <Orders loggedIn={this.state.user} />} />
           <Route path='/menu' render={() => <MenuSetup loggedIn={this.state.user} />} />
-          <Route path='/topics' component={Topics} />
         </div>
       </Router>
     )
@@ -91,77 +84,10 @@ class BasicExample extends Component {
     })
   }
 }
-// class NavBar extends Component {
-const NavBar = ({ match }) => (
-//     return (
-//     <Router>
-//       <div>
-//         <ul>
-  <div>
-    <ul>
-      <li><Link to='/'>Home</Link></li>
-      {/* <li><Link to='./orders'>Orders</Link></li> */}
-      <li><Link to={`${match.url}/orders`}>Orders</Link></li>
-      <li><Link to='./menu'>Menu</Link></li>
-    </ul>
-    <Route path={`${match.url}/orders`} render={() => <Orders loggedIn={this.state.user} />} />
-    <Route exact path={match.url} render={() => (
-      <h3>Please select a topic.</h3>
-    )} />
-  </div>
 
-//           {/* {this.state.user
-//             ? <Link to='/' onClick={() => this.logout()}>Log Out</Link>
-//             : <Link to='/' onClick={() => this.login()}>Log In</Link>
-//           } */}
-//         </ul>
-//         <hr />
-//         <Route exact path='/' component={Home} />
-//         <Route path='./orders' render={() => <Orders loggedIn={this.state.user} />} />
-//         <Route path='./topics' component={Topics} />
-//         <Route path='./menu' render={() => <MenuSetup loggedIn={this.state.user} />} />
-//       </div>
-//     </Router>
-//   )}
-// }
-)
 const Home = () => (
   <div>
     <h2>Home</h2>
-  </div>
-)
-
-const Topics = ({ match }) => (
-  <div>
-    <h2>Topics</h2>
-    <ul>
-      <li>
-        <Link to={`${match.url}/rendering`}>
-          Rendering with React
-        </Link>
-      </li>
-      <li>
-        <Link to={`${match.url}/components`}>
-          Components
-        </Link>
-      </li>
-      <li>
-        <Link to={`${match.url}/props-v-state`}>
-          Props v. State
-        </Link>
-      </li>
-    </ul>
-
-    <Route path={`${match.url}/:topicId`} component={Topic} />
-    <Route exact path={match.url} render={() => (
-      <h3>Please select a topic.</h3>
-    )} />
-  </div>
-)
-
-const Topic = ({ match }) => (
-  <div>
-    <h3>{match.params.topicId}</h3>
   </div>
 )
 
