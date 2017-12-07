@@ -4,7 +4,7 @@ import {
   Route,
   Link
 } from 'react-router-dom'
-import { auth, provider } from './firebase.js'
+import firebase, { auth, provider } from './firebase.js'
 import MenuSetup from './Menusetup'
 import Orders from './Orders'
 
@@ -13,7 +13,7 @@ class BasicExample extends Component {
     super()
     this.state = {
       inputs: [],
-      redirect: false,
+      id: null,
       user: null
     }
   }
@@ -21,18 +21,45 @@ class BasicExample extends Component {
     auth.signOut()
       .then(() => {
         this.setState({
-          user: null,
-          redirect: true
+          user: null
         })
       })
   }
   login () {
+    const hawkerIdRef = firebase.database().ref('hawkerId')
     auth.signInWithPopup(provider)
       .then((result) => {
         const user = result.user
         this.setState({
           user
         })
+        const hawkerIdCheck = firebase.database().ref('hawkerId').orderByChild('email').equalTo(user.email)
+        hawkerIdCheck.once('value').then(snap => {
+          if (snap.val() === null) {
+            console.log('no existing email address')
+            hawkerIdRef.once('value').then(subsnap => {
+              let newId = 'H' + (subsnap.numChildren() + 1)
+              this.setState({
+                id: newId
+              })
+              hawkerIdRef.child(newId).set({
+                email: user.email
+              })
+            })
+          } else {
+            let existingId = Object.keys(snap.val())[0]
+            console.log('existingId', existingId)
+            this.setState({
+              id: existingId
+            })
+          }
+          console.log('preview of hawkerIdCheck', snap.val())
+          console.log('H' + (snap.numChildren() + 1))
+        })
+        // let hawkerId = {
+        //   H1: {email: user.email}
+        // }
+        // hawkerIdCheck.H1.email.set('testing@email.com')
       })
   }
   render () {

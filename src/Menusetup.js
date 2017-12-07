@@ -8,7 +8,7 @@ class MenuSetup extends Component {
     this.state = {
       inputs: [],
       user: props.loggedIn,
-      restaurantCount: 0
+      hawkerCount: 'H01'
     }
   }
   handleSubmit (e) {
@@ -20,24 +20,28 @@ class MenuSetup extends Component {
     // console.log(formData)
     // console.log('number of food fields', Object.keys(formData).length - 1)
 
-    let restaurant = {
+    let hawker = {
       items: {},
       name: formData.user
     }
     var values = Object.values(formData)
-    values.splice(0, 1) // to remove formData.user
-
+    values.splice(0, 2) // to remove formData.user
+    console.log('values', values)
     for (var i = 0; i < values.length; i++) {
       if (i % 2 === 0) {
         console.log(values[i])
-        restaurant.items[i / 2] = {name: values[i], price: values[i + 1]}
+        hawker.items[i / 2] = {name: values[i], price: values[i + 1]}
       }
     }
-    console.log('restaurant output', restaurant)
-    const restaurantRef = firebase.database().ref('restaurants')
-    restaurantRef.push(restaurant)
-    // const restaurantRef = firebase.database().ref('restaurants').child(formData.user)
-    // restaurantRef.set(restaurant)
+    console.log('hawker output', hawker)
+    const hawkerRef = firebase.database().ref('hawkers').child(formData.hawker_id)
+    // hawkerRef.on('value', snap =>
+    // this.setState({
+    //   hawkerCount: snap.numChildren()
+    // }))
+    // const hawkerRef = firebase.database().ref('hawkers')
+    // hawkerRef.push(hawker)
+    hawkerRef.set(hawker)
   }
   appendInput () {
     var newInput = this.state.inputs.length + 1
@@ -56,7 +60,8 @@ class MenuSetup extends Component {
           {this.state.user
             ? <section className='add-item'>
               <form refs='form' onSubmit={e => this.handleSubmit(e)}>
-                <input type='text' name='user' placeholder="What's your restaurant name?" required />
+                <input type='text' name='hawker_id' value={this.state.hawkerCount} disabled='disabled' />
+                <input type='text' name='user' placeholder="What's your stall name?" required />
                 <input type='text' name='it0' placeholder='Dish 1 name' required />
                 <input type='number' name='pr0' min='0.01' step='0.01' placeholder='Price: e.g. 10.00' required />
 
@@ -73,7 +78,7 @@ class MenuSetup extends Component {
                      Add dish
                  </button>
             </section>
-          : <p> You must be logged in to see your store orders. </p>
+          : <p> You must be logged in to see your adjust your menu items. </p>
         }
           <section className='display-item'>
             <div className='wrapper'>
@@ -84,6 +89,13 @@ class MenuSetup extends Component {
         </div>
       </div>
     )
+  }
+  componentDidMount () {
+    const restaurantRef = firebase.database().ref('hawkers')
+    restaurantRef.on('value', snap =>
+    this.setState({
+      hawkerCount: 'H' + (snap.numChildren() + 1)
+    }))
   }
 }
 export default MenuSetup

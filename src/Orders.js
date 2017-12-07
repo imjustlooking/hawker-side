@@ -10,7 +10,7 @@ class Orders extends Component {
   }
 
   setItemsState () {
-    var hawkerRef = firebase.database().ref('orders').child('H06').orderByChild('order_status').equalTo('preparing')
+    var hawkerRef = firebase.database().ref('orders').child('H01').orderByChild('order_status').equalTo('preparing')
     // var hawkerRef = firebase.database().ref().child('orders').orderByChild('H_id').equalTo('H02')
     hawkerRef.on('value', snap => {
       console.log('preview', snap.val())
@@ -56,7 +56,7 @@ class Orders extends Component {
               <p id={index} onDoubleClick={(e) => this.changeStatus(e)} key={index}> {test} </p>
       )} */}
         <button onClick={() => this.checkState()}> Testing </button>
-         {this.state.user
+        {this.state.user
            ? this.state.order.map(
                (test, index) =>
                  <p id={index} onDoubleClick={(e) => this.changeStatus(e)} key={index}> {test} </p>
@@ -67,7 +67,7 @@ class Orders extends Component {
       </div>
     )
   }
-  componentDidMount () {
+  componentWillMount () {
     this.setItemsState()
   }
   }
