@@ -26,17 +26,17 @@ class BasicExample extends Component {
       })
   }
   login () {
-    const hawkerIdRef = firebase.database().ref('hawkerId')
     auth.signInWithPopup(provider)
       .then((result) => {
         const user = result.user
         this.setState({
           user
         })
+        const hawkerIdRef = firebase.database().ref('hawkerId')
         const hawkerIdCheck = firebase.database().ref('hawkerId').orderByChild('email').equalTo(user.email)
         hawkerIdCheck.once('value').then(snap => {
           if (snap.val() === null) {
-            console.log('no existing email address')
+            // console.log('no existing email address')
             hawkerIdRef.once('value').then(subsnap => {
               let newId = 'H' + (subsnap.numChildren() + 1)
               this.setState({
@@ -48,18 +48,14 @@ class BasicExample extends Component {
             })
           } else {
             let existingId = Object.keys(snap.val())[0]
-            console.log('existingId', existingId)
+            // console.log('existingId', existingId)
             this.setState({
               id: existingId
             })
           }
-          console.log('preview of hawkerIdCheck', snap.val())
-          console.log('H' + (snap.numChildren() + 1))
+          // console.log('preview of hawkerIdCheck', snap.val())
+          // console.log('H' + (snap.numChildren() + 1))
         })
-        // let hawkerId = {
-        //   H1: {email: user.email}
-        // }
-        // hawkerIdCheck.H1.email.set('testing@email.com')
       })
   }
   render () {
@@ -81,7 +77,6 @@ class BasicExample extends Component {
 
           <hr />
           <Route exact path='/' component={Home} />
-          {/* <Route path='/orders' render={() => <Orders loggedIn={this.state.user} />} /> */}
           <Route path='/orders' render={() => <Orders loggedIn={this.state.user} />} />
           <Route path='/topics' component={Topics} />
           <Route path='/menu' render={() => <MenuSetup loggedIn={this.state.user} />} />

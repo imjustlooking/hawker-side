@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import firebase from './firebase.js'
 import './App.css'
+import {
+  Redirect
+} from 'react-router-dom'
 
 class MenuSetup extends Component {
   constructor (props) {
@@ -8,7 +11,8 @@ class MenuSetup extends Component {
     this.state = {
       inputs: [],
       user: props.loggedIn,
-      hawkerCount: 'H01'
+      hawkerCount: 'H01',
+      id: null
     }
   }
   handleSubmit (e) {
@@ -47,6 +51,19 @@ class MenuSetup extends Component {
     var newInput = this.state.inputs.length + 1
     this.setState({ inputs: this.state.inputs.concat([newInput]) })
   }
+  getId () {
+    if (!this.state.user) {
+      return <Redirect to='/' />
+    }
+    const hawkerIdCheck = firebase.database().ref('hawkerId').orderByChild('email').equalTo(this.state.user.email)
+    hawkerIdCheck.on('value', snap => {
+      const existingId = Object.keys(snap.val())[0]
+      this.setState({
+        id: existingId
+      })
+    }
+    )
+  }
 
   render () {
     return (
@@ -60,7 +77,7 @@ class MenuSetup extends Component {
           {this.state.user
             ? <section className='add-item'>
               <form refs='form' onSubmit={e => this.handleSubmit(e)}>
-                <input type='text' name='hawker_id' value={this.state.hawkerCount} disabled='disabled' />
+                <input type='text' name='hawker_id' value={this.state.id} disabled='disabled' />
                 <input type='text' name='user' placeholder="What's your stall name?" required />
                 <input type='text' name='it0' placeholder='Dish 1 name' required />
                 <input type='number' name='pr0' min='0.01' step='0.01' placeholder='Price: e.g. 10.00' required />
@@ -96,6 +113,7 @@ class MenuSetup extends Component {
     this.setState({
       hawkerCount: 'H' + (snap.numChildren() + 1)
     }))
+    this.getId()
   }
 }
 export default MenuSetup
