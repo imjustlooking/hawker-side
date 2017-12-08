@@ -67,14 +67,13 @@ class Orders extends Component {
         {this.state.user
            ? this.state.order.map(
                (test, index) =>
-                 <div className="card" >
-                   <div className="card-block">
-                     <h4 id={index} onDoubleClick={(e) => this.changeStatus(e)} key={index} className="card-title orderp">Order #{index}</h4>
-                     <p className="card-text orderp">{test}</p>
+                 <div className='card' >
+                   <div className='card-block'>
+                     <h4 id={index} onDoubleClick={(e) => this.changeStatus(e)} key={index} className='card-title orderp'>Order #{index}</h4>
+                     <p className='card-text orderp'>{test}</p>
                    </div>
                  </div>
          )
-        //  {/* <p id={index} onDoubleClick={(e) => this.changeStatus(e)} key={index}> {test} </p> */}
           : <Redirect to='/' />
          }
       </div>

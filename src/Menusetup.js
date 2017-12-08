@@ -61,20 +61,18 @@ class MenuSetup extends Component {
     return (
       <div className='app'>
         <header>
-          {/* <div className='wrapper'> */}
-            <h1>Hawker Menu Setup</h1>
-          {/* </div> */}
+          <h1>Hawker Menu Setup</h1>
         </header>
         <div className='container'>
           {this.state.user
             ? <section className='add-item'>
               <form refs='form' onSubmit={e => this.handleSubmit(e)}>
-                <div className="form-group row">
-                  <div className="col-12">
-                      <input type='text' className='form-control' name='hawker_id' value={this.state.id} disabled='disabled' />
-                      <input type='text' className='form-control' name='user' placeholder='Stall name' required />
-                      <input type='text' className='form-control' name='it0' placeholder='Dish 1 name' required />
-                      <input type='number' className='form-control' name='pr0' min='0.01' step='0.01' placeholder='Price: e.g. 10.00' required />
+                <div className='form-group row'>
+                  <div className='col-12'>
+                    <input type='text' className='form-control' name='hawker_id' value={this.state.id} disabled='disabled' />
+                    <input type='text' className='form-control' name='user' placeholder='Stall name' required />
+                    <input type='text' className='form-control' name='it0' placeholder='Dish 1 name' required />
+                    <input type='number' className='form-control' name='pr0' min='0.01' step='0.01' placeholder='Price: e.g. 10.00' required />
                   </div>
                 </div>
                 {this.state.inputs.map(
@@ -86,11 +84,11 @@ class MenuSetup extends Component {
 
                 <button type='submit'>Submit</button>
               </form>
-              <div className="buttonwrapper">
-              <button className='button1' onClick={() => this.appendInput()}>
+              <div className='buttonwrapper'>
+                <button className='button1' onClick={() => this.appendInput()}>
                      Add dish
                  </button>
-               </div>
+              </div>
             </section>
           : <p> You must be logged in to see your adjust your menu items. </p>
         }

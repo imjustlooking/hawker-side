@@ -56,7 +56,6 @@ class BasicExample extends Component {
   }
   render () {
     return (
-      // <NavBar />
       <Router>
         <div>
           <ul>
