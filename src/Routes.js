@@ -8,7 +8,7 @@ import firebase, { auth, provider } from './firebase.js'
 import MenuSetup from './Menusetup'
 import Orders from './Orders'
 
-class BasicExample extends Component {
+class NavParent extends Component {
   constructor () {
     super()
     this.state = {
@@ -75,7 +75,7 @@ class BasicExample extends Component {
       </Router>
     )
   }
-  componentDidMount () {
+  componentWillMount () {
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.setState({ user })
@@ -92,4 +92,4 @@ const Home = () => (
   </div>
 )
 
-export default BasicExample
+export default NavParent

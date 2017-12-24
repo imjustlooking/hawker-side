@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import BasicExample from './Routes'
+import NavParent from './Routes'
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<BasicExample />, document.getElementById('root'));
+ReactDOM.render(<NavParent />, document.getElementById('root'));
 registerServiceWorker()
