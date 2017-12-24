@@ -25,4 +25,16 @@ To summarize the available user stories for the **patron**:
 Technologies used
 ------
 1. Front-end: [React](https://reactjs.org/) (Javascript Library)
-2. Database: [Firebase](https://firebase.google.com/)
+2. Database & authentication: [Firebase](https://firebase.google.com/)
+
+How it works
+------
+We used the in-built Gmail authentication from firebase which took care of log-ins. For both the hawker and patron sides of the app, each account has a unique ID which is generated on signup.
+
+Upon login, each hawker is assigned an ID, to which he can then update the menu tagged to this ID. 
+
+Along the same vein, patrons ordering through the same hawker will send orders to one specific ID.
+
+For the purpose of demonstration, we have hard-coded the hawker ID to H1, which has 2 pending orders to prepare. Note that orders will only be sent to the hawker after 'payment' is received. The hawker can then double click on the order item to send a complete order status over.
+
+![hawkersidePay double click preview](/public/hawkerPay_clickpreview.gif)
