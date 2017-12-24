@@ -63,3 +63,5 @@ One struggle I faced in hawkerSidePay is that we passed the login state (this.st
  This meant that the app will only recognize the unique ID of the hawker if he had clicked Menu/Orders after logging in. Otherwise, it will show no corresponding orders/menu.
 
  The way we overcame this was to redirect the user to the root page after logging in/out, such that the user has to click on Menu/Orders instead of refreshing the current page they were on. This forces them to get this.state.user as props through clicking on the tabs again. A little 'hacky' but it works for now.
+
+ It would have been better if we used a way which allows this.state.user to persist throughout the session, perhaps by lifting the state up to the NavParent component? Though at the point of this project, React and Firebase were both new technologies to us, so I think we still did an alright job, albeit less polished one.
