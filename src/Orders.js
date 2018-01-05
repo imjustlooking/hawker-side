@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import firebase from './firebase.js'
 import {
-  Redirect
+  Redirect, Link
 } from 'react-router-dom'
 
 class Orders extends Component {
@@ -76,6 +76,7 @@ class Orders extends Component {
          )
           : <Redirect to='/' />
          }
+         <small> If the above section is empty, see the preview below: </small> <br /> <br /> <img src='image/hawkerPay_clickpreview.gif' />
       </div>
     )
   }

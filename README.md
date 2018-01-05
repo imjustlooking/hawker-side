@@ -48,7 +48,7 @@ Patrons ordering through the same hawker will send orders to one specific ID.
 
 For the purpose of demonstration, we have hard-coded the hawker ID to H1, which has 2 pending orders to prepare. Note that orders will only be sent to the hawker after 'payment' is received. The hawker can then double click on the order item to send a complete order status over.
 
-![hawkersidePay double click preview](/public/hawkerPay_clickpreview.gif)
+![hawkersidePay double click preview](/public/image/hawkerPay_clickpreview.gif)
 
 Challenges
 ------
